@@ -1,0 +1,41 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+
+Container_Boundary(sistema, "Sistema de Gerenciamento de Medicamentos") {
+
+    Component(frontend, "Frontend Web", "React.js", "Interface gráfica para interação do usuário")
+
+    Container_Boundary(backend, "Backend (Laravel)") {
+        Component(controllerMedicamentos, "Controller de Medicamentos", "PHP", "Gerencia as requisições relacionadas a medicamentos")
+        Component(controllerUsuarios, "Controller de Usuários", "PHP", "Gerencia a autenticação e dados de usuários")
+        Component(serviceMedicamentos, "Serviço de Medicamentos", "PHP", "Lida com a lógica de negócios dos medicamentos")
+        Component(serviceUsuarios, "Serviço de Usuários", "PHP", "Gerencia a lógica de autenticação e usuários")
+        Component(repositoryMedicamentos, "Repositório de Medicamentos", "PHP", "Acesso ao banco de dados para medicamentos")
+        Component(repositoryUsuarios, "Repositório de Usuários", "PHP", "Acesso ao banco de dados para usuários")
+    }
+
+    ComponentDb(database, "Banco de Dados", "MySQL", "Armazena dados de medicamentos e usuários")
+    Component_Ext(apiMedicamentos, "API Externa de Medicamentos", "JSON", "Consulta os medicamentos mais procurados")
+    Component_Ext(googleOAuth, "Google OAuth 2.0", "Serviço de autenticação", "Autenticação de usuários")
+    Component_Ext(viaCEP, "Webservice ViaCEP", "API REST", "Consulta de CEP")
+
+}
+
+Rel(frontend, controllerMedicamentos, "Consulta e gerencia medicamentos", "HTTP")
+Rel(frontend, controllerUsuarios, "Autenticação e gestão de usuários", "HTTP")
+
+Rel(controllerMedicamentos, serviceMedicamentos, "Executa lógica de negócios")
+Rel(controllerUsuarios, serviceUsuarios, "Executa lógica de autenticação")
+
+Rel(serviceMedicamentos, repositoryMedicamentos, "Acessa dados dos medicamentos")
+Rel(serviceUsuarios, repositoryUsuarios, "Acessa dados dos usuários")
+
+Rel(repositoryMedicamentos, database, "Leitura e escrita de medicamentos", "SQL")
+Rel(repositoryUsuarios, database, "Leitura e escrita de usuários", "SQL")
+
+Rel(serviceMedicamentos, apiMedicamentos, "Consulta medicamentos mais procurados", "HTTP")
+Rel(serviceUsuarios, googleOAuth, "Autentica usuários", "OAuth 2.0")
+Rel(serviceUsuarios, viaCEP, "Consulta endereços via CEP", "REST API")
+
+@enduml

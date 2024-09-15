@@ -1,0 +1,28 @@
+@startuml
+skinparam linetype ortho
+
+node "Balanceamento de Carga" {
+  rectangle "HAProxy" as haproxy
+}
+
+node "Backend 1" {
+  rectangle "Aplicação Backend 1" as backend1
+}
+
+node "Backend 2" {
+  rectangle "Aplicação Backend 2" as backend2
+}
+
+node "Notebook" {
+  rectangle "Front-end" as frontend
+  database "Banco de Dados" as db
+}
+
+frontend --> haproxy : "Requisição HTTP"
+haproxy --> backend1 : "Balanceamento"
+haproxy --> backend2 : "Balanceamento"
+
+backend1 --> db : "MySQL"
+backend2 --> db : "MySQL"
+
+@enduml
