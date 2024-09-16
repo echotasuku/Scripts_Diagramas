@@ -1,7 +1,6 @@
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
-
 Person_Ext(farmaceutico, "Farmacêutico", "Responsável por gerenciar os medicamentos")
 Person_Ext(funcionario, "Funcionário", "Consulta e retira medicamentos com receita")
 
@@ -9,17 +8,14 @@ System_Boundary(sistema, "Sistema de Gerenciamento de Medicamentos") {
     Container(frontend, "Frontend Web", "React.js", "Interface usada por farmacêuticos e funcionários")
     Container(backend, "Backend", "Laravel", "Lógica de negócios e manipulação de dados")
     ContainerDb(database, "Banco de Dados", "MySQL", "Armazena informações sobre medicamentos e usuários")
-    Container_Ext(apiMedicamentos, "API Externa de Medicamentos", "JSON", "Consulta os medicamentos mais procurados")
-    Container_Ext(googleOAuth, "Google OAuth 2.0", "Serviço de autenticação", "Autenticação de usuários no sistema")
-    Container_Ext(viaCEP, "Webservice ViaCEP", "API REST", "Consulta de CEP para endereços")
 }
+
+System_Ext(googleOAuth, "Google OAuth 2.0", "Serviço de autenticação")
 
 Rel(farmaceutico, frontend, "Gerencia medicamentos e consulta informações")
 Rel(funcionario, frontend, "Consulta medicamentos e faz retiradas com receita")
 Rel(frontend, backend, "Solicitações de funcionalidades", "HTTP")
 Rel(backend, database, "Leitura e escrita de dados", "SQL")
-Rel(backend, apiMedicamentos, "Consulta medicamentos mais procurados", "HTTP")
 Rel(backend, googleOAuth, "Autentica usuários", "OAuth 2.0")
-Rel(backend, viaCEP, "Consulta de endereços", "REST API")
 
 @enduml

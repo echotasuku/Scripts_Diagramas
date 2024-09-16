@@ -12,13 +12,9 @@ Person(farmaceutico, "Farmacêutico/Funcionário", "Gerencia e consulta medicame
 
 System(system, "Sistema de Gerenciamento de Medicamentos", "Gerencia operações de medicamentos")
 
-System_Ext(apiExterna, "API Externa de Medicamentos", "API de Consulta Externa")
 System_Ext(oauth, "Google OAuth 2.0", "Autenticação de Usuários")
-System_Ext(viaCep, "Webservice ViaCEP", "Consulta de CEP")
 
 Rel(farmaceutico, system, "Gerencia/Consulta medicamentos")
-Rel(system, apiExterna, "Consulta Medicamentos Mais Procurados")
 Rel(system, oauth, "Autenticação de Usuários")
-Rel(system, viaCep, "Consulta CEP")
 
 @enduml
