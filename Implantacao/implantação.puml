@@ -2,7 +2,9 @@
 skinparam linetype ortho
 
 node "Balanceamento de Carga" {
-  rectangle "HAProxy" as haproxy
+  node "VM Debian" {
+    rectangle "HAProxy" as haproxy
+  }
 }
 
 node "Backend 1" {
