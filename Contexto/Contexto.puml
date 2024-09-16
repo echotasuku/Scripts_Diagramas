@@ -1,5 +1,5 @@
 @startuml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
 
 !define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
 !define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
@@ -8,28 +8,17 @@
 !include DEVICONS/mysql.puml
 !include FONTAWESOME/users.puml
 
-
-
 Person(farmaceutico, "Farmacêutico/Funcionário", "Gerencia e consulta medicamentos", $sprite="users")
 
-System_Boundary(sistema, "Sistema de Gerenciamento de Medicamentos") {
-    Container(frontend, "Frontend Web", "React.js", "Interface com o usuário", $sprite="react")
-    Container(backend, "Backend", "Laravel", "Gerencia as operações de medicamentos", $sprite="laravel")
-    ContainerDb(database, "Banco de Dados", "MySQL", "Armazena informações de medicamentos e usuários", $sprite="mysql")
-}
+System(system, "Sistema de Gerenciamento de Medicamentos", "Gerencia operações de medicamentos")
 
 System_Ext(apiExterna, "API Externa de Medicamentos", "API de Consulta Externa")
 System_Ext(oauth, "Google OAuth 2.0", "Autenticação de Usuários")
 System_Ext(viaCep, "Webservice ViaCEP", "Consulta de CEP")
 
-Rel(farmaceutico, frontend, "Gerencia/Consulta medicamentos")
-Rel(frontend, backend, "Consulta/Envia dados", "HTTP")
-Rel(backend, database, "Lê/Escreve dados")
-Rel(backend, apiExterna, "Consulta Medicamentos Mais Procurados")
-Rel(backend, oauth, "Autenticação de Usuários")
-Rel(backend, viaCep, "Consulta CEP")
-
-' Compactar o layout
-LAYOUT_TOP_DOWN()
+Rel(farmaceutico, system, "Gerencia/Consulta medicamentos")
+Rel(system, apiExterna, "Consulta Medicamentos Mais Procurados")
+Rel(system, oauth, "Autenticação de Usuários")
+Rel(system, viaCep, "Consulta CEP")
 
 @enduml
